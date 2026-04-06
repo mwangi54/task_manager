@@ -24,6 +24,8 @@ def main():
             
         elif choice == "2":
             print("\n--- Mark Task as Complete ---")
+            # Import tasks here to get the latest list
+            from task_manager.task_utils import tasks
             # Show pending tasks first
             pending_tasks = [task for task in tasks if not task["completed"]]
             if not pending_tasks:
@@ -31,8 +33,13 @@ def main():
                 print(f"Total tasks: {len(tasks)} | Completed: {len([t for t in tasks if t['completed']])}")
             else:
                 view_pending_tasks()
-                index = input("\nEnter the task number to mark as complete: ")
-                mark_task_as_complete(index)
+                index_input = input("\nEnter the task number to mark as complete: ")
+                try:
+                    # Convert to integer and subtract 1 because display shows 1-based indexing
+                    task_number = int(index_input) - 1
+                    mark_task_as_complete(task_number)
+                except ValueError:
+                    print("Error: Please enter a valid number.")
             
         elif choice == "3":
             print("\n--- Viewing Pending Tasks ---")
@@ -60,6 +67,4 @@ def main():
             print("Please try again.")
 
 if __name__ == "__main__":
-    # Make tasks accessible in main
-    from task_manager.task_utils import tasks
     main()
