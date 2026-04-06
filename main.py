@@ -4,15 +4,15 @@ from task_manager.task_utils import add_task, mark_task_as_complete, view_pendin
 # Define the main function
 def main():
     while True:
-        print("\n" + "="*50)
+        print("\n==================================================")
         print("Task Management System")
-        print("="*50)
+        print("==================================================")
         print("1. Add Task")
         print("2. Mark Task as Complete")
         print("3. View Pending Tasks")
         print("4. View Progress")
         print("5. Exit")
-        print("-"*50)
+        print("--------------------------------------------------")
         choice = input("Enter your choice (1-5): ")
 
         if choice == "1":
@@ -24,14 +24,15 @@ def main():
             
         elif choice == "2":
             print("\n--- Mark Task as Complete ---")
-            view_pending_tasks()
-            try:
+            # Show pending tasks first
+            pending_tasks = [task for task in tasks if not task["completed"]]
+            if not pending_tasks:
+                print("\nNo pending tasks found!")
+                print(f"Total tasks: {len(tasks)} | Completed: {len([t for t in tasks if t['completed']])}")
+            else:
+                view_pending_tasks()
                 index = input("\nEnter the task number to mark as complete: ")
                 mark_task_as_complete(index)
-            except KeyboardInterrupt:
-                print("\nOperation cancelled.")
-            except Exception as e:
-                print(f"An error occurred: {e}")
             
         elif choice == "3":
             print("\n--- Viewing Pending Tasks ---")
@@ -59,4 +60,6 @@ def main():
             print("Please try again.")
 
 if __name__ == "__main__":
+    # Make tasks accessible in main
+    from task_manager.task_utils import tasks
     main()

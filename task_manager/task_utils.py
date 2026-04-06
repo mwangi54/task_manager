@@ -50,7 +50,7 @@ def mark_task_as_complete(index, tasks=tasks):
         # Mark task as complete
         tasks[index]["completed"] = True
         tasks[index]["completed_at"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        print(f"Task '{tasks[index]['title']}' marked as complete!")
+        print("Task marked as complete!")
         return True
     except ValueError:
         print("Error: Please enter a valid number for the task index.")
